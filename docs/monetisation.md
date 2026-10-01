@@ -1,6 +1,6 @@
 # Monétisation — Mini Adventure
 
-> **Version 1.0.0** · 28/09/2026 · Statut : choix produit à valider, puis prêt à implémenter
+> **Version 1.1.0** · 01/10/2026 · Statut : choix produit à valider, puis prêt à implémenter
 > Développe les trois pistes retenues : **des diamants à acheter**, **des objets vraiment extraordinaires**, **agrandir son chez-moi**.
 > Le code de référence (§9) a été exécuté et testé avant d'être écrit ici : 20 tests, TypeScript strict. Les chiffres d'économie (§3.4) viennent d'une simulation.
 
@@ -122,7 +122,7 @@
 - **Gains : 360 💎 par semaine**, soit environ 51 par jour calendaire.
 - Soit 240 💎 par semaine pour la maison et 120 pour les objets (à peu près un objet extraordinaire par semaine, ou plusieurs ordinaires).
 
-| Étape | Jour d'obtention, sans achat | Avec un « Sac » à 4,99 € par mois |
+| Étape | Jour d'obtention, sans achat | Avec un « Sac » à 2,49 € par mois |
 |---|---|---|
 | Jardin agrandi (1re extension) | ≈ jour 6 | ≈ jour 5 |
 | Cuisine | ≈ jour 19 | ≈ jour 14 |
@@ -131,7 +131,7 @@
 | Maison principale complète (9 extensions) | ≈ jour 209 (7 mois) | ≈ jour 146 (5 mois) |
 | Avec les 3 pièces à thème | ≈ jour 326 (11 mois) | ≈ jour 227 (7,5 mois) |
 
-**Lecture.** Les premières pièces arrivent vite (3 pièces en 5 semaines), puis le rythme ralentit : la maison devient un objectif à long terme. Un parent qui offre 4,99 € par mois fait gagner environ 30 % de temps, sans court-circuiter le jeu : les verrous de niveau restent. Dans ce scénario, les diamants achetés vont entièrement à la maison.
+**Lecture.** Les premières pièces arrivent vite (3 pièces en 5 semaines), puis le rythme ralentit : la maison devient un objectif à long terme. Un parent qui offre 2,49 € par mois fait gagner environ 30 % de temps, sans court-circuiter le jeu : les verrous de niveau restent. Dans ce scénario, les diamants achetés vont entièrement à la maison.
 
 **Point de vigilance.** La simulation suppose qu'il y a assez de niveaux : au rythme de 25 par semaine, le niveau 80 est atteint en un peu plus de 3 semaines. Quand l'enfant a fini tous les niveaux, ses gains tombent à environ 30 💎 par jour de jeu (rejeux plafonnés, cadeau du jour, défis). Il faudra alors ajouter des niveaux, ou relever le plafond des rejeux. **Tous ces chiffres sont à ajuster après des tests avec de vrais enfants.**
 
@@ -143,9 +143,11 @@
 
 | Pack | Prix (France, TTC) | Diamants | 💎 par euro | Par rapport au petit pack | Correspond à | Jours de jeu équivalents |
 |---|---|---|---|---|---|---|
-| **Poignée** | 1,99 € | 150 | 75 | — | un objet extraordinaire | ≈ 3 jours |
-| **Sac** | 4,99 € | 450 | 90 | +20 % | une nouvelle pièce (cuisine) | ≈ 9 jours |
-| **Trésor** | 9,99 € | 1 000 | 100 | +33 % | un étage | ≈ 19 jours |
+| **Poignée** | 0,99 € | 150 | ≈ 152 | — | un objet extraordinaire | ≈ 3 jours |
+| **Sac** | 2,49 € | 450 | ≈ 181 | +19 % | une nouvelle pièce (cuisine) | ≈ 9 jours |
+| **Trésor** | 4,99 € | 1 000 | ≈ 200 | +32 % | un étage | ≈ 19 jours |
+
+Les prix sont deux fois plus bas qu'en version 1.0.0 (1,99 / 4,99 / 9,99 €), avec les mêmes quantités de diamants : ce sont des montants de petit cadeau, plus faciles à accepter pour un parent. Les tailles de packs ne changent pas, donc l'alignement sur les prix des objets (§4.2) et la simulation (§3.4) restent valables. Si le palier 2,49 € n'est pas proposé pour l'euro dans App Store Connect, prendre le palier disponible le plus proche en dessous.
 
 Identifiants produit proposés : `<bundle>.diamonds.150`, `<bundle>.diamonds.450`, `<bundle>.diamonds.1000` (produits **consommables**). Chez Apple, un identifiant produit supprimé ne peut jamais être réutilisé : il faut bien les choisir dès le départ.
 
@@ -162,7 +164,7 @@ Les principes européens demandent de ne pas forcer l'achat de monnaie en trop, 
 ### 4.3 Affichage des prix
 
 - **Dans l'espace parent**, le prix affiché est **toujours** celui que fournit le store (`displayPrice` avec StoreKit, `formattedPrice` avec Play Billing), jamais une chaîne codée en dur. Il est donc dans la bonne devise, TVA comprise.
-- **Chaque prix en diamants s'accompagne de son équivalent en monnaie réelle** (« ≈ 1,99 € »). Il est calculé sur le pack le plus cher au diamant (la Poignée), pour ne jamais sous-estimer le coût : `realMoneyEquivalentMicros` (§9).
+- **Chaque prix en diamants s'accompagne de son équivalent en monnaie réelle** (« ≈ 0,99 € »). Il est calculé sur le pack le plus cher au diamant (la Poignée), pour ne jamais sous-estimer le coût : `realMoneyEquivalentMicros` (§9).
 - **Côté enfant**, cet équivalent s'affiche en petit, en gris, sous le prix en diamants. C'est réglable (`showRealMoneyToChild`, activé par défaut), à confirmer avec le juriste.
 - Si les prix du store ne sont pas disponibles (hors ligne, premier lancement), on utilise la dernière liste reçue, mise en cache. Si aucune n'a jamais été reçue, on n'affiche **pas** d'équivalent plutôt qu'un faux prix.
 
@@ -176,15 +178,15 @@ Les principes européens demandent de ne pas forcer l'achat de monnaie en trop, 
 
 | Produit | Prix TTC | Prix HT (TVA 20 %) | Net pour toi (85 % du HT) |
 |---|---|---|---|
-| Poignée 150 💎 | 1,99 € | 1,66 € | **1,41 €** |
-| Sac 450 💎 | 4,99 € | 4,16 € | **3,53 €** |
-| Trésor 1 000 💎 | 9,99 € | 8,33 € | **7,08 €** |
+| Poignée 150 💎 | 0,99 € | 0,83 € | **0,70 €** |
+| Sac 450 💎 | 2,49 € | 2,08 € | **1,76 €** |
+| Trésor 1 000 💎 | 4,99 € | 4,16 € | **3,53 €** |
 | Collection de saison | 3,99 € | 3,33 € | **2,83 €** |
 
 *Montants calculés sur les valeurs exactes, puis arrondis au centime.*
 
 **Ordre de grandeur des revenus** : revenu net mensuel ≈ familles actives × part de familles qui achètent × dépense moyenne TTC ÷ 1,2 × 0,85.
-Exemple **purement illustratif**, pas un chiffre de marché : 5 000 familles actives, 2 % qui achètent, 6 € en moyenne → 600 € TTC → **≈ 425 € nets par mois**. Un modèle sans pression rapporte peu par joueur : il ne devient rentable qu'avec une large audience (voir §12).
+Exemple **purement illustratif**, pas un chiffre de marché : 5 000 familles actives, 2 % qui achètent, 3 € en moyenne → 300 € TTC → **≈ 210 € nets par mois**. Avec des prix plus bas, chaque achat rapporte deux fois moins : il faut deux fois plus d'acheteurs, ou d'achats, pour le même revenu. Un modèle sans pression rapporte peu par joueur : il ne devient rentable qu'avec une large audience (voir §12).
 
 ---
 
@@ -195,7 +197,7 @@ Exemple **purement illustratif**, pas un chiffre de marché : 5 000 familles act
 Accessible uniquement après `ParentGate`. De haut en bas :
 
 1. **Explication** (trois lignes) : « Les diamants se gagnent en jouant. Vous pouvez en offrir pour accélérer : ils servent à agrandir la maison et à acheter des objets. Rien n'est tiré au sort, rien n'est à durée limitée. »
-2. **Les 3 packs**, sous forme de cartes identiques et sobres. Chaque carte montre : le nom, le nombre de diamants, le prix du store, « soit 90 💎 par euro », et « De quoi offrir : une nouvelle pièce ». Pas de badge clignotant ni de mise en avant agressive.
+2. **Les 3 packs**, sous forme de cartes identiques et sobres. Chaque carte montre : le nom, le nombre de diamants, le prix du store, « soit environ 180 💎 par euro », et « De quoi offrir : une nouvelle pièce ». Pas de badge clignotant ni de mise en avant agressive.
 3. **Collection de la saison** : les 5 objets en aperçu animé, le prix, et **la progression de l'enfant** : « Votre enfant peut aussi la gagner en jouant : 3 objets sur 5 déjà obtenus. » Le parent décide en connaissance de cause.
 4. **Catalogue** : la liste de tous les objets et extensions, avec leur prix en diamants et l'équivalent en euros.
 5. **Historique** : date, produit, prix, statut (crédité, en attente, remboursé). Cette liste vient du journal.
@@ -717,9 +719,9 @@ import { emptyWallet, credit, spend, applyRefund, countForDay, isConsistent, rea
 
 const T = Date.UTC(2026, 8, 28, 12);
 const PACKS: StorePack[] = [
-  { productId: 'diamonds_150', diamonds: 150, priceMicros: 1_990_000, currency: 'EUR' },
-  { productId: 'diamonds_450', diamonds: 450, priceMicros: 4_990_000, currency: 'EUR' },
-  { productId: 'diamonds_1000', diamonds: 1000, priceMicros: 9_990_000, currency: 'EUR' },
+  { productId: 'diamonds_150', diamonds: 150, priceMicros: 990_000, currency: 'EUR' },
+  { productId: 'diamonds_450', diamonds: 450, priceMicros: 2_490_000, currency: 'EUR' },
+  { productId: 'diamonds_1000', diamonds: 1000, priceMicros: 4_990_000, currency: 'EUR' },
 ];
 
 describe('portefeuille', () => {
@@ -782,9 +784,9 @@ describe('portefeuille', () => {
 
 describe('prix en euros', () => {
   test('équivalent calculé sur le pack le plus cher au diamant, arrondi au centime supérieur', () => {
-    expect(realMoneyEquivalentMicros(150, PACKS)).toEqual({ micros: 1_990_000, currency: 'EUR' });
-    expect(realMoneyEquivalentMicros(450, PACKS)).toEqual({ micros: 5_970_000, currency: 'EUR' });
-    expect(realMoneyEquivalentMicros(50, PACKS)!.micros).toBe(670_000); // 0,6633 → 0,67
+    expect(realMoneyEquivalentMicros(150, PACKS)).toEqual({ micros: 990_000, currency: 'EUR' });
+    expect(realMoneyEquivalentMicros(450, PACKS)).toEqual({ micros: 2_970_000, currency: 'EUR' });
+    expect(realMoneyEquivalentMicros(80, PACKS)!.micros).toBe(530_000); // 0,528 → 0,53
   });
   test('sans packs chargés : null (on n\'affiche pas de faux prix)', () => {
     expect(realMoneyEquivalentMicros(150, [])).toBeNull();
@@ -794,13 +796,13 @@ describe('prix en euros', () => {
 describe('plafond mensuel', () => {
   const monthKeyOf = (ms: number) => new Date(ms).toISOString().slice(0, 7);
   const purchases: PurchaseRecord[] = [
-    { transactionId: 'a', productId: 'diamonds_450', priceMicros: 4_990_000, currency: 'EUR', atMs: T, refunded: false },
-    { transactionId: 'b', productId: 'diamonds_450', priceMicros: 4_990_000, currency: 'EUR', atMs: T, refunded: true },
-    { transactionId: 'c', productId: 'diamonds_1000', priceMicros: 9_990_000, currency: 'EUR', atMs: Date.UTC(2026, 7, 30), refunded: false },
+    { transactionId: 'a', productId: 'diamonds_450', priceMicros: 2_490_000, currency: 'EUR', atMs: T, refunded: false },
+    { transactionId: 'b', productId: 'diamonds_450', priceMicros: 2_490_000, currency: 'EUR', atMs: T, refunded: true },
+    { transactionId: 'c', productId: 'diamonds_1000', priceMicros: 4_990_000, currency: 'EUR', atMs: Date.UTC(2026, 7, 30), refunded: false },
   ];
   test('ne compte que le mois en cours et ignore les remboursés', () => {
-    expect(canPurchase(10_000_000, purchases, monthKeyOf, T, 4_990_000)).toBe(true);  // 4,99 + 4,99 = 9,98
-    expect(canPurchase(10_000_000, purchases, monthKeyOf, T, 9_990_000)).toBe(false);
+    expect(canPurchase(5_000_000, purchases, monthKeyOf, T, 2_490_000)).toBe(true);  // 2,49 + 2,49 = 4,98
+    expect(canPurchase(5_000_000, purchases, monthKeyOf, T, 4_990_000)).toBe(false); // 2,49 + 4,99 = 7,48
     expect(canPurchase(null, purchases, monthKeyOf, T, 99_990_000)).toBe(true);
   });
 });
@@ -984,3 +986,4 @@ describe('progression', () => {
 | Version | Date | Changements |
 |---|---|---|
 | 1.0.0 | 28/09/2026 | Première version : cadre légal, diamants et packs, parcours parent, objets extraordinaires, collections de saison, maison, code de référence testé, lots. |
+| 1.1.0 | 01/10/2026 | Prix des packs de diamants divisés par deux : 0,99 / 2,49 / 4,99 € (au lieu de 1,99 / 4,99 / 9,99 €), mêmes quantités de diamants. Mise à jour des revenus nets, de l'exemple de revenus, de la simulation et des tests. |
