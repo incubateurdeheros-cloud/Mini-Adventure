@@ -1,6 +1,6 @@
 # Monétisation — Mini Adventure
 
-> **Version 1.1.0** · 01/10/2026 · Statut : choix produit à valider, puis prêt à implémenter
+> **Version 1.1.1** · 01/10/2026 · Statut : choix produit à valider, puis prêt à implémenter
 > Développe les trois pistes retenues : **des diamants à acheter**, **des objets vraiment extraordinaires**, **agrandir son chez-moi**.
 > Le code de référence (§9) a été exécuté et testé avant d'être écrit ici : 20 tests, TypeScript strict. Les chiffres d'économie (§3.4) viennent d'une simulation.
 
@@ -146,6 +146,12 @@
 | **Poignée** | 0,99 € | 150 | ≈ 152 | — | un objet extraordinaire | ≈ 3 jours |
 | **Sac** | 2,49 € | 450 | ≈ 181 | +19 % | une nouvelle pièce (cuisine) | ≈ 9 jours |
 | **Trésor** | 4,99 € | 1 000 | ≈ 200 | +32 % | un étage | ≈ 19 jours |
+
+![Visuels des packs de diamants : un tas de diamants, un sac de diamants, un coffre ouvert rempli de diamants](images/packs-diamants.webp)
+
+*Visuels des packs, sur fond vert à détourer. Ligne du haut : **Poignée** (tas de diamants), **Sac**, **Trésor** (coffre ouvert). Ligne du bas : variantes du sac et du coffre.*
+
+Le coffre du Trésor reste toujours **ouvert**, son contenu bien visible. Pas d'animation où l'on ouvre un coffre fermé : elle évoquerait un coffre au contenu aléatoire (§2.1, point 2).
 
 Les prix sont deux fois plus bas qu'en version 1.0.0 (1,99 / 4,99 / 9,99 €), avec les mêmes quantités de diamants : ce sont des montants de petit cadeau, plus faciles à accepter pour un parent. Les tailles de packs ne changent pas, donc l'alignement sur les prix des objets (§4.2) et la simulation (§3.4) restent valables. Si le palier 2,49 € n'est pas proposé pour l'euro dans App Store Connect, prendre le palier disponible le plus proche en dessous.
 
@@ -987,3 +993,4 @@ describe('progression', () => {
 |---|---|---|
 | 1.0.0 | 28/09/2026 | Première version : cadre légal, diamants et packs, parcours parent, objets extraordinaires, collections de saison, maison, code de référence testé, lots. |
 | 1.1.0 | 01/10/2026 | Prix des packs de diamants divisés par deux : 0,99 / 2,49 / 4,99 € (au lieu de 1,99 / 4,99 / 9,99 €), mêmes quantités de diamants. Mise à jour des revenus nets, de l'exemple de revenus, de la simulation et des tests. |
+| 1.1.1 | 01/10/2026 | Ajout des visuels des packs (§4.1, `images/packs-diamants.webp`). |

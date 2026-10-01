@@ -3,7 +3,7 @@
 | Document | Version | Date | Contenu |
 |---|---|---|---|
 | [systeme-de-vies.md](systeme-de-vies.md) | 1.0.0 | 28/09/2026 | Le système de vies de Candy Crush, puis sa version adaptée aux 3–10 ans (« cœurs »). Moteur de référence testé, interface, espace parent, 3 lots. |
-| [monetisation.md](monetisation.md) | 1.1.0 | 01/10/2026 | Diamants à acheter, objets extraordinaires, agrandir son chez-moi. Cadre légal, économie chiffrée, parcours d'achat parent, code de référence testé, 5 lots. |
+| [monetisation.md](monetisation.md) | 1.1.1 | 01/10/2026 | Diamants à acheter, objets extraordinaires, agrandir son chez-moi. Cadre légal, économie chiffrée, parcours d'achat parent, code de référence testé, 5 lots. |
 
 Le code de référence des deux documents a été exécuté : 47 tests réussis, TypeScript strict.
 
